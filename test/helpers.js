@@ -20,10 +20,11 @@ export function memoryStorage() {
       for (const key of Array.isArray(keys) ? keys : [keys]) if (map.delete(key)) removed += 1;
       return removed;
     },
-    async list({ prefix = '', start, limit } = {}) {
+    async list({ prefix = '', start, limit, reverse } = {}) {
       const keys = [...map.keys()]
         .filter((key) => key.startsWith(prefix) && (start === undefined || key >= start))
         .sort();
+      if (reverse) keys.reverse();
       const result = new Map();
       for (const key of keys.slice(0, limit ?? keys.length)) result.set(key, structuredClone(map.get(key)));
       return result;
