@@ -1,3 +1,4 @@
+import { community, isAdmin } from './community.js';
 import { signToken, verifySteamLogin, verifyToken } from './auth.js';
 
 const MAX_TEXT = 200;
@@ -12,19 +13,23 @@ const STEAM_ID = /^\d{17}$/;
 
 const msgKey = (seq) => `msg:${String(seq).padStart(12, '0')}`;
 
+export { json, readJson, bearer, msgKey };
+
 export function cleanText(value, max) {
   const text = typeof value === 'string' ? value : '';
   return Array.from(text.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim()).slice(0, max).join('');
 }
 
 function json(body, status = 200) {
-  return new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8' } });
+  return new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
 }
 
 async function readJson(request) {
   if (Number(request.headers.get('content-length') ?? 0) > MAX_BODY_BYTES) return null;
   try {
-    return await request.json();
+    const bytes = await request.arrayBuffer();
+    if (bytes.byteLength > MAX_BODY_BYTES) return null;
+    return JSON.parse(new TextDecoder().decode(bytes));
   } catch {
     return null;
   }
@@ -36,7 +41,7 @@ function bearer(request) {
 }
 
 function sameSecret(given, expected) {
-  if (typeof given !== 'string' || typeof expected !== 'string' || given.length !== expected.length) return false;
+  if (!given || typeof expected !== 'string' || given.length !== expected.length) return false;
   let diff = 0;
   for (let i = 0; i < given.length; i += 1) diff |= given.charCodeAt(i) ^ expected.charCodeAt(i);
   return diff === 0;
@@ -59,6 +64,7 @@ export class ChatRoomLogic {
     if (route === 'GET /chat') return this.readChat(request, url);
     if (route === 'POST /chat') return this.sendChat(request);
     if (route === 'POST /admin/ban') return this.ban(request);
+    if (server === 'launcher') return community(this, route, request, url);
     return json({ error: 'not_found' }, 404);
   }
 
@@ -67,9 +73,11 @@ export class ChatRoomLogic {
     if (!user) return json({ error: 'unauthorized' }, 401);
     const since = Math.max(0, Number.parseInt(url.searchParams.get('since') ?? '0', 10) || 0);
     const meta = await this.loadMeta();
-    const page = await this.storage.list({ prefix: 'msg:', start: msgKey(since + 1), limit: CHAT_PAGE });
-    const messages = [...page.values()].map(({ seq, source, name, text, time }) => ({ seq, source, name, text, time }));
-    return json({ session: ROOM_SESSION, online: true, head: meta.seq, messages });
+    const latest = url.searchParams.get('latest') === '1';
+    const page = await this.storage.list(latest ? { prefix: 'msg:', reverse: true, limit: CHAT_PAGE } : { prefix: 'msg:', start: msgKey(since + 1), limit: CHAT_PAGE });
+    const admin = isAdmin(user);
+    const messages = [...page.values()].sort((a,b) => a.seq-b.seq).map(({ seq, source, name, text, time, steamId }) => ({ seq, source, name, text, time, ...(admin && steamId ? { steamId } : {}) }));
+    return json({ session: ROOM_SESSION, online: true, head: meta.seq, messages, admin });
   }
 
   async sendChat(request) {
@@ -78,17 +86,21 @@ export class ChatRoomLogic {
     const body = await readJson(request);
     const text = cleanText(body?.text, MAX_TEXT);
     if (!text) return json({ error: 'bad_text' }, 400);
-    if (await this.isBanned(user.sid)) return json({ error: 'banned' }, 403);
-    const now = this.now();
-    const last = (await this.storage.get(`rate:${user.sid}`)) ?? 0;
-    if (now - last < SEND_INTERVAL_MS) return json({ error: 'rate_limited' }, 429);
-    const meta = await this.loadMeta();
-    meta.seq += 1;
-    const name = cleanText(user.name, MAX_NAME) || 'Игрок';
-    await this.storage.put(msgKey(meta.seq), { seq: meta.seq, source: 'launcher', name, text, time: now });
-    await this.storage.put(`rate:${user.sid}`, now);
-    await this.saveMeta(meta);
-    return json({ ok: true, seq: meta.seq });
+    const write = async (db) => {
+      const now = this.now();
+      if ((await db.get(`ban:${user.sid}`)) > now) return json({ error: 'banned' }, 403);
+      const last = await db.get(`rate:${user.sid}`);
+      if (last !== undefined && now - last < SEND_INTERVAL_MS) return json({ error: 'rate_limited' }, 429);
+      const meta = (await db.get('meta')) ?? { seq: 0 };
+      meta.seq += 1;
+      const name = cleanText(user.name, MAX_NAME) || 'Игрок';
+      await db.put(msgKey(meta.seq), { seq: meta.seq, source: 'launcher', name, text, time: now, steamId: user.sid });
+      await db.put(`author:${user.sid}`, { steamId: user.sid, name });
+      await db.put(`rate:${user.sid}`, now);
+      await db.put('meta', meta);
+      return json({ ok: true, seq: meta.seq });
+    };
+    return this.storage.transaction ? this.storage.transaction(write) : write(this.storage);
   }
 
   async ban(request) {
