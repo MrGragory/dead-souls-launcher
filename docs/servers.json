@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "revision": 4,
+  "validUntilUtc": "2027-11-20T00:00:00Z",
+  "name": "Dead Souls",
+  "discord": "https://discord.com/invite/wuhpmtxPTb",
+  "servers": [
+    {
+      "id": "chernarus-pve",
+      "name": "[RU] DZ Dead Souls (Chernarus PVE)",
+      "host": "109.248.4.20",
+      "gamePort": 2464,
+      "queryPort": 2465,
+      "map": "Чернарусь",
+      "expectedVersion": "1.30",
+      "description": "Выживание на Chernarus • PVE • Dead Souls",
+      "restartHoursMsk": [
+        0,
+        3,
+        6,
+        9,
+        12,
+        15,
+        18,
+        21
+      ],
+      "blockMinutes": 5,
+      "postRestartGuardMinutes": 6,
+      "mods": [
+        {
+          "id": "1559212036",
+          "name": "CF"
+        },
+        {
+          "id": "2545327648",
+          "name": "Dabs Framework"
+        },
+        {
+          "id": "1828439124",
+          "name": "VPPAdminTools"
+        },
+        {
+          "id": "2291785308",
+          "name": "DayZ-Expansion-Core"
+        },
+        {
+          "id": "2116151222",
+          "name": "DayZ-Expansion"
+        },
+        {
+          "id": "2792982069",
+          "name": "DayZ-Expansion-AI"
+        },
+        {
+          "id": "2572324799",
+          "name": "DayZ-Expansion-Book"
+        },
+        {
+          "id": "2792983364",
+          "name": "DayZ-Expansion-Groups"
+        },
+        {
+          "id": "2792982897",
+          "name": "DayZ-Expansion-Chat"
+        },
+        {
+          "id": "2792984722",
+          "name": "DayZ-Expansion-Navigation"
+        },
+        {
+          "id": "2572328470",
+          "name": "DayZ-Expansion-Market"
+        },
+        {
+          "id": "2828486817",
+          "name": "DayZ-Expansion-Quests"
+        },
+        {
+          "id": "3717031746",
+          "name": "DeadSouls_New breath"
+        },
+        {
+          "id": "3817443909",
+          "name": "BoomLay’s Things Updated"
+        },
+        {
+          "id": "3717030527",
+          "name": "DeadSouls_NB_Cars"
+        },
+        {
+          "id": "3735031089",
+          "name": "DeadSouls_Shmell"
+        },
+        {
+          "id": "2049002856",
+          "name": "MuchCarKey"
+        },
+        {
+          "id": "3425994533",
+          "name": "VehicleRecovery"
+        },
+        {
+          "id": "3556131153",
+          "name": "RaG_Core"
+        },
+        {
+          "id": "3157695626",
+          "name": "RaG_BaseBuilding"
+        },
+        {
+          "id": "3117613872",
+          "name": "RaG_Hunting_Cabin"
+        },
+        {
+          "id": "3604049451",
+          "name": "DayZ Mining System with Ores and Gems V2"
+        },
+        {
+          "id": "3625576252",
+          "name": "Mining System V2 RUS TRANSLATE"
+        },
+        {
+          "id": "3619591804",
+          "name": "Syndicate Home"
+        }
+      ]
+    },
+    {
+      "id": "chernarus-pve-aibot",
+      "name": "[RU] DZ Dead Souls (Nazdara PVE)",
+      "host": "109.248.4.14",
+      "gamePort": 2308,
+      "queryPort": 2309,
+      "map": "",
+      "expectedVersion": "1.30",
+      "description": "Выживание на Nazdara с AiBot • PVE • Dead Souls",
+      "restartHoursMsk": [
+        0,
+        3,
+        6,
+        9,
+        12,
+        15,
+        18,
+        21
+      ],
+      "blockMinutes": 5,
+      "postRestartGuardMinutes": 6,
+      "mods": [
+        {
+          "id": "3813439703",
+          "name": "Shmell_Core"
+        },
+        {
+          "id": "3718303998",
+          "name": "Shmell_Clothing"
+        },
+        {
+          "id": "1559212036",
+          "name": "CF"
+        },
+        {
+          "id": "3813490074",
+          "name": "Shmell_Vehicles"
+        },
+        {
+          "id": "3231386993",
+          "name": "KGB.LIB"
+        },
+        {
+          "id": "3487352016",
+          "name": "Shmell_Weapons"
+        }
+      ]
+    }
+  ]
+}
