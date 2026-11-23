@@ -1,6 +1,0 @@
-node_modules/
-dist/
-*.zip
-*.log
-*PRIVATE*
-*private*.pem
