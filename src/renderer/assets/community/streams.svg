@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-labelledby="title">
+<title id="title">Dead Souls — стримы и видео на YouTube и VK Видео</title>
+<defs>
+ <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#182e2b"/><stop offset=".63" stop-color="#101c1b"/><stop offset="1" stop-color="#080e0e"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#c5b980" stop-opacity=".43"/><stop offset="1" stop-color="#a9945e" stop-opacity="0"/></radialGradient>
+ <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#99bdab" stroke-opacity=".08"/></pattern>
+ <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 3h4" stroke="#020708" stroke-opacity=".27"/></pattern>
+ <path id="pine" d="M0 0-13 23h7l-14 21h9l-15 20h23v12h6V64h23L11 44h9L6 23h7Z"/>
+</defs>
+<path fill="url(#bg)" d="M0 0h900v300H0z"/><ellipse cx="450" cy="146" rx="310" ry="165" fill="url(#glow)"/><path fill="url(#grid)" d="M0 0h900v300H0z"/>
+<path fill="#344342" d="m0 152 70-35 42 14 100-63 120 63 58-23 66 23 108-61 82 39 67-35 85 58 44-12 58 28v152H0z"/>
+<path fill="#242f31" d="m0 172 108-28 45 14 62-35 88 42 81-8 71 25 75-25 55 11 126-46 104 46 85-29v161H0z"/>
+<g fill="#101e20"><use href="#pine" transform="translate(35 124) scale(1.45)"/><use href="#pine" transform="translate(95 155) scale(.97)"/><use href="#pine" transform="translate(151 164) scale(.75)"/><use href="#pine" transform="translate(750 166) scale(.8)"/><use href="#pine" transform="translate(813 148) scale(1.1)"/><use href="#pine" transform="translate(874 114) scale(1.56)"/></g>
+<path fill="#0b1517" d="m0 229 91-18 83 16 76-9 94 14 110 27 90-21 72-23 103 8 81-20 100 18v79H0z"/>
+<path fill="url(#scan)" d="M0 0h900v300H0z"/>
+<path d="M23 54V21h35m784 0h35v33M23 246v33h35m784 0h35v-33" fill="none" stroke="#87a397" stroke-width="2"/>
+<g text-anchor="middle" font-family="Segoe UI, Arial, sans-serif"><text x="450" y="79" fill="#cbd9cd" font-size="16" font-weight="600" letter-spacing="6">DEAD SOULS</text><text x="450" y="142" fill="#0a1515" stroke="#0a1515" stroke-width="5" font-size="44" font-weight="800">СТРИМЫ И ВИДЕО</text><text x="450" y="142" fill="#edf2ed" font-size="44" font-weight="800">СТРИМЫ И ВИДЕО</text></g>
+<g font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="19"><rect x="286" y="174" width="158" height="50" rx="11" fill="#171719" stroke="#955153"/><rect x="299" y="188" width="33" height="22" rx="6" fill="#e44848"/><path d="m312 193 10 6-10 6z" fill="#fff"/><text x="342" y="206" fill="#fff">YouTube</text><rect x="456" y="174" width="158" height="50" rx="11" fill="#151c2b" stroke="#557cba"/><rect x="470" y="186" width="28" height="26" rx="7" fill="#4489ee"/><path d="m480 192 11 7-11 7z" fill="#fff"/><text x="507" y="206" fill="#fff">VK Видео</text></g>
+</svg>
